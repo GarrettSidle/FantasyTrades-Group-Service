@@ -20,6 +20,7 @@ public class UpdateGroupHandler : IRequestHandler<UpdateGroupCommand>
             throw new DomainException("Group not found.");
 
         group.UpdateName(request.Name);
+        group.UpdateDates(request.DraftDate, request.EndDate);
         await _repo.SaveChangesAsync();
 
         return Unit.Value;

@@ -27,6 +27,8 @@ public class GroupController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateGroupCommand command)
     {
+        if (command.DraftDate == default || command.EndDate == default)
+            return BadRequest("DraftDate and EndDate are required.");
         var id = await _mediator.Send(command);
         return Ok(new { groupId = id });
     }
@@ -76,7 +78,8 @@ public class GroupController : ControllerBase
     {
         if (groupId != command.GroupId)
             return BadRequest("Group ID in URL must match body");
-
+        if (command.DraftDate == default || command.EndDate == default)
+            return BadRequest("DraftDate and EndDate are required.");
         await _mediator.Send(command);
         return Ok();
     }

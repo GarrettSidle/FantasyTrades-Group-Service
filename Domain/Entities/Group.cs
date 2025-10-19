@@ -14,18 +14,22 @@ namespace FantasyTradesGroupService.Domain.Entities
         public Guid CreatedByUserId { get; private set; }
         public GroupCode Code { get; private set; }
         public DateTime CreatedAt { get; private set; }
+        public DateTime DraftDate { get; private set; }
+        public DateTime EndDate { get; private set; }
 
         public IReadOnlyCollection<GroupMember> Members => _members.AsReadOnly();
 
         private Group() { } // for EF / serialization
 
-        public Group(string name, Guid createdByUserId)
+        public Group(string name, Guid createdByUserId, DateTime draftDate, DateTime endDate)
         {
             Id = Guid.NewGuid();
             Name = name;
             CreatedByUserId = createdByUserId;
             Code = GroupCode.Generate();
             CreatedAt = DateTime.UtcNow;
+            DraftDate = draftDate;
+            EndDate = endDate;
         }
 
         public void AddMember(Guid userId, string username, string role = "Member")
@@ -40,8 +44,13 @@ namespace FantasyTradesGroupService.Domain.Entities
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new DomainException("Group name cannot be empty.");
-                
             Name = name;
+        }
+
+        public void UpdateDates(DateTime draftDate, DateTime endDate)
+        {
+            DraftDate = draftDate;
+            EndDate = endDate;
         }
     }
 }

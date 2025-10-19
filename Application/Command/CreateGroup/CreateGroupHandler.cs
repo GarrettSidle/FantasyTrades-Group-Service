@@ -19,12 +19,12 @@ public class CreateGroupHandler : IRequestHandler<CreateGroupCommand, Guid>
 
     public async Task<Guid> Handle(CreateGroupCommand request, CancellationToken cancellationToken)
     {
-        var group = new Group(request.Name, request.CreatorUserId);
-        group.AddMember(request.CreatorUserId, request.CreatorUsername, "Creator");
+    var group = new Group(request.Name, request.CreatorUserId, request.DraftDate, request.EndDate);
+    group.AddMember(request.CreatorUserId, request.CreatorUsername, "Creator");
 
-        await _repo.AddAsync(group);
-        await _repo.SaveChangesAsync();
+    await _repo.AddAsync(group);
+    await _repo.SaveChangesAsync();
 
-        return group.Id;
+    return group.Id;
     }
 }
