@@ -31,6 +31,12 @@ namespace FantasyTradesGroupService.Infrastructure.Persistence
                 .Where(g => g.Members.Any(m => m.UserId == userId))
                 .ToListAsync();
 
+    public Task DeleteAsync(Group group)
+    {
+        _db.Groups.Remove(group);
+        return Task.CompletedTask;
+    }
+
         public async Task SaveChangesAsync() => await _db.SaveChangesAsync();
     }
 }

@@ -6,6 +6,8 @@ using FantasyTradesGroupService.Application.Command.AddGroupMember;
 using FantasyTradesGroupService.Application.Query.GetGroupById;
 using FantasyTradesGroupService.Application.Query.GetGroupByCode;
 using FantasyTradesGroupService.Application.Query.GetGroupsByMemberId;
+using FantasyTradesGroupService.Application.Command.UpdateGroup;
+using FantasyTradesGroupService.Application.Command.DeleteGroup;
 using FantasyTradesGroupService.Application.Interfaces;
 using FantasyTradesGroupService.Domain.Dtos;
 
@@ -66,6 +68,23 @@ public class GroupController : ControllerBase
             return NotFound();
 
         await _mediator.Send(command);
+        return Ok();
+    }
+
+    [HttpPut("{groupId}")]
+    public async Task<IActionResult> Update(Guid groupId, [FromBody] UpdateGroupCommand command)
+    {
+        if (groupId != command.GroupId)
+            return BadRequest("Group ID in URL must match body");
+
+        await _mediator.Send(command);
+        return Ok();
+    }
+
+    [HttpDelete("{groupId}")]
+    public async Task<IActionResult> Delete(Guid groupId)
+    {
+        await _mediator.Send(new DeleteGroupCommand(groupId));
         return Ok();
     }
 }

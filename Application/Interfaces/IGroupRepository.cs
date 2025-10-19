@@ -17,6 +17,8 @@ namespace FantasyTradesGroupService.Application.Interfaces
 
         Task AddMemberAsync(FantasyTradesGroupService.Domain.Entities.GroupMember member);
 
+        Task DeleteAsync(FantasyTradesGroupService.Domain.Entities.Group group);
+
         Task SaveChangesAsync();
     }
 }

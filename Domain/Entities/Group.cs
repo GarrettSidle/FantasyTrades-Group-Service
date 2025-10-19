@@ -35,5 +35,13 @@ namespace FantasyTradesGroupService.Domain.Entities
 
             _members.Add(new GroupMember(Id, userId, username, role));
         }
+
+        public void UpdateName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new DomainException("Group name cannot be empty.");
+                
+            Name = name;
+        }
     }
 }
