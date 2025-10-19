@@ -1,0 +1,18 @@
+# Build artifacts
+bin/
+obj/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+
+# OS files
+*.DS_Store
+
+# Others
+*.log
+*.db
+*.sqlite
+.env
+.idea/
